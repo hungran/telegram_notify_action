@@ -39,11 +39,12 @@ jobs:
       #     name: dist
       #     path: dist/
 
-      - name: send custom message with args
+      - name: send custom message
         uses: ./
         with:
           TELEGRAM_TO: ${{ secrets.TELEGRAM_TO }}
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          # parse_mode: MarkdownV2 (Optional: Markdown, MarkdownV2, HTML)
           message: |
             *CJ* is not _CZ_
             The ${{ github.event_name }} event triggered second step.
