@@ -1,0 +1,22 @@
+name: 'Telegram Notify'
+description: 'hungran'
+inputs:
+  TELEGRAM_TO:  
+    description: 'The group ID of telegram'
+    required: true
+  TELEGRAM_TOKEN:  
+    description: 'bot token'
+    required: true
+  message:
+    description: 'telegram message'
+    required: true
+  debug:
+    description: 'enable debug mode.'
+    required: false
+  parse_mode: 
+    description: 'format of message eg: Markdown, MarkdownV2, HTML'
+    default: MarkdownV2
+    required: true
+runs:
+  using: 'node16'
+  main: 'dist/index.js'

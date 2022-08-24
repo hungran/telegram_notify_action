@@ -1,0 +1,38 @@
+/* eslint-disable no-undef */
+const core = require('@actions/core')
+const TelegramBot = require('node-telegram-bot-api')
+const escapedMsg = require('./escapedMsg')
+
+const groupId = core.getInput('TELEGRAM_TO')
+const message = core.getInput('message').toString()
+const parse_mode = core.getInput('parse_mode')
+const bot = new TelegramBot((core.getInput('TELEGRAM_TOKEN')).toString(), { polling: false })
+
+exports.run = async () => {
+  try {
+    if(!groupId) {
+      throw new Error('no groupId have been provided. Exiting.')
+    }
+    if(!parse_mode) {
+      throw new Error('no parse_mode have been provided.Should be: Markdown | MarkdownV2 | HTML. Exiting.')
+    }
+    if(!message) {
+      throw new Error('no message found. Exiting')
+    }
+    const msg = escapedMsg(message)
+
+    sendMessage(groupId, msg, parse_mode)
+  } catch (e) {
+    core.setFailed(e)
+  }
+}
+
+const sendMessage = async (groupId, msg, parse_mode) => {
+  core.startGroup(`Attempting to send message to ${groupId}`)
+  try {
+    const rs = await bot.sendMessage(groupId, msg, {parse_mode : `${parse_mode}`})
+    return rs 
+  } catch (e) {
+    throw new Error(`error sending message to ${groupId} - ${e}`)
+  }
+}

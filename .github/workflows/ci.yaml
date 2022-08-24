@@ -1,0 +1,51 @@
+name: telegram message
+on: [push]
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 12
+          registry-url: https://npm.pkg.github.com/
+      - run: |
+          echo ::group::install
+          npm ci
+          # echo ::group::lint
+          # npm run lint
+          echo ::group::pack
+          npm run pack
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          
+      - name: Compare the expected and actual dist/ directories
+        run: |
+          if [ "$(git diff --ignore-space-at-eol dist/ | wc -l)" -gt "0" ]; then
+            echo "Detected uncommitted changes after build.  See status below:"
+            git diff
+            exit 1
+          fi
+        id: diff
+
+      # If index.js was different than expected, upload the expected version as an artifact
+      - uses: actions/upload-artifact@v2
+        if: ${{ failure() && steps.diff.conclusion == 'failure' }}
+        with:
+          name: dist
+          path: dist/
+
+      - name: send custom message with args
+        uses: ./
+        with:
+          TELEGRAM_TO: ${{ secrets.TELEGRAM_TO }}
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            *CJ* is not _CZ_
+            The ${{ github.event_name }} event triggered second step.
+            show the github variable ref: ${{ github.ref }}
+            show the github variable commit: ${{ github.sha }}
+            show the github variable ref: {{ commit.ref }}
+            show the github variable commit: {{ commit.sha }}
+            Commit Message: ${{ github.event.head_commit.message }}
