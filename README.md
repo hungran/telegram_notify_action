@@ -22,6 +22,51 @@ with:
         show the github variable commit: {{ commit.sha }}
         Commit Message: ${{ github.event.head_commit.message }}
 ```
+Map Github user with Telegram user to mention in message
+```yaml
+jobs:
+  telegram-notify:
+    runs-on: ubuntu-latest
+    name: Telegram Notify
+    env:
+      map_users: > 
+        {
+          "<github_user>": "@<tele_user>",
+          "xxx": "@xxx"
+        }
+      reviewer: ""
+    steps:
+      - name: Checkout repo ✅
+        uses: actions/checkout@master
+      - name: 'Check if PR has been opened/re-opened'
+        id: opened
+        if: github.event.action == 'opened' || github.event.action == 'reopened'
+        run: echo "::set-output name=status::opened"
+      - name: 'Check if PR have been closed'
+        id: closed
+        if: github.event.action == 'closed' && github.event.pull_request.merged == false
+        run: echo "::set-output name=status::closed" 
+      - name: 'Check if PR have been merged'
+        id: merged
+        if:  github.event.action == 'closed' && github.event.pull_request.merged == true
+        run: echo "::set-output name=status::merged"
+      - name: 'Check if PR request reviewer'
+        id: review
+        if: github.event.action == 'review_requested'
+        run: |
+          echo "::set-output name=status::requested review of"
+          echo "reviewer=${{ fromJSON(env.map_users)[join(github.event.pull_request.requested_reviewers[*].login, ', ')] }}" >> $GITHUB_ENV
+      - name: Notify 🐧
+        uses: hungran/telegram_notify_action@master
+        with:
+          TELEGRAM_TO: ${{ secrets.TELEGRAM_TO }}
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}    
+          message: |
+            🎉 **`${{ github.actor }}`** has been ${{join(steps.*.outputs.status, ' and ')}} ${{ env.reviewer }} a Pull Request 🍻
+            Repository: ${{ github.repository }}
+            ${{ github.event.pull_request.html_url }}
+```
+
 ## Secrets
 
 Getting started with [Telegram Bot API](https://core.telegram.org/bots/api).
