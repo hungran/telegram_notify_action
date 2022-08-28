@@ -36,8 +36,6 @@ jobs:
         }
       reviewer: ""
     steps:
-      - name: Checkout repo ✅
-        uses: actions/checkout@master
       - name: 'Check if PR has been opened/re-opened'
         id: opened
         if: github.event.action == 'opened' || github.event.action == 'reopened'
