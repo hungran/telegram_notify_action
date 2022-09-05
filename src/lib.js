@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 const core = require('@actions/core')
 const TelegramBot = require('node-telegram-bot-api')
-const escapedMsg = require('./escapedMsg')
+const wrapMessage = require('./wrapMessage')
 
 const groupId = core.getInput('TELEGRAM_TO')
 const message = core.getInput('message').toString()
@@ -19,8 +19,7 @@ exports.run = async () => {
     if(!message) {
       throw new Error('no message found. Exiting')
     }
-    const msg = escapedMsg(message)
-
+    const msg = wrapMessage(message, parse_mode)
     sendMessage(groupId, msg, parse_mode)
   } catch (e) {
     core.setFailed(e)

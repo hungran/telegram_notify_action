@@ -1,10 +1,13 @@
 /* eslint-disable no-useless-escape */
 // eslint-disable-next-line no-undef
-module.exports = function (message) {
+exports.wrapMessage = async (message, parse_mode) => {
     if(!message) {
         throw new Error('no message found. Exiting')
     }
-    const r = message.toString()
+    if(parse_mode != "MarkdownV2") {
+        return message
+    }
+    const r = await message.toString()
     .replace(/\[/g, '\\[')
     .replace(/\]/g, '\\]')
     .replace(/\(/g, '\\(')
