@@ -1,4 +1,4 @@
-const { wrapMessage } = require('./wrapMessage')
+const wrapMessage = require('./wrapMessage')
 const core = require('@actions/core')
 const date = new Date(0).toISOString()
 

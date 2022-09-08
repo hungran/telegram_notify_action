@@ -56767,11 +56767,11 @@ const sendMessage = async (groupId, msg, parse_mode) => {
 /***/ }),
 
 /***/ 2149:
-/***/ ((__unused_webpack_module, exports) => {
+/***/ ((module) => {
 
 /* eslint-disable no-useless-escape */
 // eslint-disable-next-line no-undef
-exports.wrapMessage = async (message, parse_mode) => {
+module.exports = async function (message, parse_mode) {
     if(!message) {
         throw new Error('no message found. Exiting')
     }
