@@ -12,7 +12,7 @@ jobs:
           registry-url: https://npm.pkg.github.com/
       - run: |
           echo ::group::install
-          npm ci
+          npm install && npm ci
           # echo ::group::lint
           # npm run lint
           echo ::group::pack
