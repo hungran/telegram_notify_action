@@ -19,7 +19,7 @@ exports.run = async () => {
     if(!message) {
       throw new Error('no message found. Exiting')
     }
-    const msg = wrapMessage(message, parse_mode)
+    const msg = await wrapMessage(message, parse_mode)
     sendMessage(groupId, msg, parse_mode)
   } catch (e) {
     core.setFailed(e)
