@@ -8,11 +8,14 @@ module.exports = async function (message, parse_mode) {
         return message
     }
     const r = await message.toString()
+    .replace(/\_/g, '\\_')
+    .replace(/\*/g, '\\*')
     .replace(/\[/g, '\\[')
     .replace(/\]/g, '\\]')
     .replace(/\(/g, '\\(')
     .replace(/\)/g, '\\)')
     .replace(/\~/g, '\\~')
+    .replace(/\`/g, '\\`')
     .replace(/\>/g, '\\>')
     .replace(/\#/g, '\\#')
     .replace(/\+/g, '\\+')
