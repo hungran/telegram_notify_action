@@ -18,9 +18,9 @@ describe("Wrap Message when using MarkdownV2", () => {
         `.toString()
         const msg = await wrapMessage(inputMessage, 'MarkdownV2')
         const output = `
-        \\#
+        #
         *CJ* is not _CZ_
-        The abc event triggered second step\\.
+        The abc event triggered second step.
         show the github variable ref: xyz
         show the github variable commit: 234857238947
         show the github variable ref: 123123123
