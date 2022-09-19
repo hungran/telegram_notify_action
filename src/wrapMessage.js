@@ -6,7 +6,7 @@ module.exports = async function (message, parse_mode) {
     if(!message) {
         throw new Error('no message found. Exiting')
     }
-    if(parse_mode != "MarkdownV2") {
+    if(parse_mode != "MarkdownV2" || parse_mode != "Markdown") {
         return message
     }
     const escapeMarkdownV2 = (message) => {
