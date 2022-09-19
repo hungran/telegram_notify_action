@@ -69723,25 +69723,6 @@ module.exports = async function (message, parse_mode) {
     if(parse_mode != "MarkdownV2") {
         return message
     }
-    // const r = await message.toString()
-    // .replace(/\_/g, '\\_')
-    // .replace(/\*/g, '\\*')
-    // .replace(/\[/g, '\\[')
-    // .replace(/\]/g, '\\]')
-    // .replace(/\(/g, '\\(')
-    // .replace(/\)/g, '\\)')
-    // .replace(/\~/g, '\\~')
-    // .replace(/\>/g, '\\>')
-    // .replace(/\#/g, '\\#')
-    // .replace(/\+/g, '\\+')
-    // .replace(/\-/g, '\\-')
-    // .replace(/\=/g, '\\=')
-    // .replace(/\|/g, '\\|')
-    // .replace(/\{/g, '\\{')
-    // .replace(/\}/g, '\\}')
-    // .replace(/\./g, '\\.')
-    // .replace(/\!/g, '\\!')
-    // return r   
     const escapeMarkdownV2 = (message) => {
         // Функция telegramifyMarkdown не совсем корректно работает, глючит с форматом __Underlined__,
         // поэтому обходим этот глюк с помощью замены "__" на "@@" и обратно.
@@ -69758,7 +69739,8 @@ module.exports = async function (message, parse_mode) {
         const undog = mdEscapedText.replace(/@@/gi, '__');
     
         return undog.replace(/%%/gi, '*');
-    }  
+    }
+    return escapeMarkdownV2(message)   
 }
 
 
