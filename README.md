@@ -1,3 +1,5 @@
+[![telegram message](https://github.com/hungran/telegram_notify_action/actions/workflows/ci.yaml/badge.svg)](https://github.com/hungran/telegram_notify_action/actions/workflows/ci.yaml)
+[![docker build and push](https://github.com/hungran/telegram_notify_action/actions/workflows/release_docker.yaml/badge.svg)](https://github.com/hungran/telegram_notify_action/actions/workflows/release_docker.yaml)
 # 🚀 Telegram for GitHub Actions
 
 [GitHub Action](https://github.com/features/actions) for sending a Telegram notification message.
