@@ -1,6 +1,8 @@
 /* eslint-disable no-useless-escape */
 // eslint-disable-next-line no-undef
 // https://www.npmjs.com/package/telegramify-markdown
+/* thanks to Nex-Otaku for his gist in
+https://gist.github.com/Nex-Otaku/21b3ff63d7c3040309952d2fe4a27f06 */
 const telegramifyMarkdown = require('telegramify-markdown');
 module.exports = async function (message, parse_mode) {
     if(!message) {
