@@ -4,8 +4,8 @@ const TelegramBot = require('node-telegram-bot-api')
 const wrapMessage = require('./wrapMessage')
 
 const groupId = core.getInput('TELEGRAM_TO') || process.env.TELEGRAM_TO
-const message = core.getInput('message').toString() || "abcxyz"
-const parse_mode = core.getInput('parse_mode') || "Markdown"
+const message = core.getInput('message').toString() || process.env.MESSAGE || "abcxyz"
+const parse_mode = core.getInput('parse_mode') || "MarkdownV2"
 const bot = new TelegramBot((core.getInput('TELEGRAM_TOKEN')).toString() || process.env.TELEGRAM_TOKEN.toString(), { polling: false })
 
 exports.run = async () => {
