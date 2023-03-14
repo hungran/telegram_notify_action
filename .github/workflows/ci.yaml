@@ -33,7 +33,10 @@ jobs:
 #         id: diff
 
       # If index.js was different than expected, upload the expected version as an artifact
-      - uses: actions/upload-artifact@v2
+      # Breaking Changes
+      # With the update to Node 16, all scripts will now be run with Node 16 rather than Node 12.
+      # https://github.com/actions/upload-artifact/releases/tag/v3.0.0
+      - uses: actions/upload-artifact@v3
 #         if: ${{ failure() && steps.diff.conclusion == 'failure' }}
         with:
           name: dist
