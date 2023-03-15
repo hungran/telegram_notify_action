@@ -15,7 +15,7 @@ inputs:
     required: false
   parse_mode: 
     description: 'format of message eg: Markdown, MarkdownV2, HTML'
-    default: Markdown
+    default: MarkdownV2
     required: true
 runs:
   using: 'node16'
