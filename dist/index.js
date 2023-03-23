@@ -1,5 +1,49 @@
-require('./sourcemap-register.js');/******/ (() => { // webpackBootstrap
+/******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
+
+/***/ 52909:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+/* eslint-disable no-undef */
+const core = __nccwpck_require__(42186)
+const TelegramBot = __nccwpck_require__(10633)
+const wrapMessage = __nccwpck_require__(78896)
+
+const groupId = core.getInput('TELEGRAM_TO') || process.env.TELEGRAM_TO
+const message = core.getInput('message').toString() || process.env.MESSAGE.toString() || "abcxyz"
+const parse_mode = core.getInput('parse_mode') || "MarkdownV2"
+const bot = new TelegramBot((core.getInput('TELEGRAM_TOKEN')).toString() || process.env.TELEGRAM_TOKEN.toString(), { polling: false })
+
+exports.run = async () => {
+  try {
+    if(!groupId) {
+      throw new Error('no groupId have been provided. Exiting.')
+    }
+    if(!parse_mode) {
+      throw new Error('no parse_mode have been provided.Should be: Markdown | MarkdownV2 | HTML. Exiting.')
+    }
+    if(!message) {
+      throw new Error('no message found. Exiting')
+    }
+    const msg = await wrapMessage(message, parse_mode)
+    sendMessage(groupId, msg, parse_mode)
+  } catch (e) {
+    core.setFailed(e)
+  }
+}
+
+const sendMessage = async (groupId, msg, parse_mode) => {
+  core.startGroup(`Attempting to send message to ${groupId}`)
+  try {
+    const rs = await bot.sendMessage(groupId, msg, {parse_mode : `${parse_mode}`})
+    return rs 
+  } catch (e) {
+    throw new Error(`error sending message to ${groupId} - ${e}`)
+  }
+}
+
+
+/***/ }),
 
 /***/ 87351:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
@@ -69665,62 +69709,20 @@ function factory(key, options) {
 
 /***/ }),
 
-/***/ 86804:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-/* eslint-disable no-undef */
-const core = __nccwpck_require__(42186)
-const TelegramBot = __nccwpck_require__(10633)
-const wrapMessage = __nccwpck_require__(82149)
-
-const groupId = core.getInput('TELEGRAM_TO')
-const message = core.getInput('message').toString()
-const parse_mode = core.getInput('parse_mode')
-const bot = new TelegramBot((core.getInput('TELEGRAM_TOKEN')).toString(), { polling: false })
-
-exports.run = async () => {
-  try {
-    if(!groupId) {
-      throw new Error('no groupId have been provided. Exiting.')
-    }
-    if(!parse_mode) {
-      throw new Error('no parse_mode have been provided.Should be: Markdown | MarkdownV2 | HTML. Exiting.')
-    }
-    if(!message) {
-      throw new Error('no message found. Exiting')
-    }
-    const msg = await wrapMessage(message, parse_mode)
-    sendMessage(groupId, msg, parse_mode)
-  } catch (e) {
-    core.setFailed(e)
-  }
-}
-
-const sendMessage = async (groupId, msg, parse_mode) => {
-  core.startGroup(`Attempting to send message to ${groupId}`)
-  try {
-    const rs = await bot.sendMessage(groupId, msg, {parse_mode : `${parse_mode}`})
-    return rs 
-  } catch (e) {
-    throw new Error(`error sending message to ${groupId} - ${e}`)
-  }
-}
-
-
-/***/ }),
-
-/***/ 82149:
+/***/ 78896:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
 /* eslint-disable no-useless-escape */
 // eslint-disable-next-line no-undef
 // https://www.npmjs.com/package/telegramify-markdown
+/* thanks to Nex-Otaku for his gist
+https://gist.github.com/Nex-Otaku/21b3ff63d7c3040309952d2fe4a27f06 */
 const telegramifyMarkdown = __nccwpck_require__(29259);
 module.exports = async function (message, parse_mode) {
     if(!message) {
         throw new Error('no message found. Exiting')
     }
-    if(parse_mode != "MarkdownV2" || parse_mode != "Markdown") {
+    if(parse_mode != "MarkdownV2") {
         return message
     }
     const escapeMarkdownV2 = (message) => {
@@ -70706,7 +70708,7 @@ var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
 // eslint-disable-next-line no-undef
-const { run } = __nccwpck_require__(86804)
+const { run } = __nccwpck_require__(52909)
 
 run()
 
@@ -70715,4 +70717,3 @@ run()
 module.exports = __webpack_exports__;
 /******/ })()
 ;
-//# sourceMappingURL=index.js.map
