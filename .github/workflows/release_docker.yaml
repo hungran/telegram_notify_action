@@ -64,7 +64,7 @@ jobs:
       - name: Run Trivy vulnerability scanner Go
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: '${{ steps.meta.outputs.tags }}-go'
+          image-ref: 'ghcr.io/${{ github.repository_owner }}/${{ github.repository }}/go:${{ github.sha }}'
           format: 'table'
           exit-code: '1'
           ignore-unfixed: true
