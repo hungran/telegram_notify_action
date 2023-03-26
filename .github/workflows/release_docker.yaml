@@ -48,8 +48,8 @@ jobs:
           context: .
           file: chainguard.Dockerfile
           push: true
-          tags: go-${{ steps.meta.outputs.tags }}
-          labels: go-${{ steps.meta.outputs.labels }}
+          tags: ${{ steps.meta.outputs.tags }}_go
+          labels: ${{ steps.meta.outputs.labels }}_go
 
       - name: Run Trivy vulnerability scanner JS
         uses: aquasecurity/trivy-action@master
