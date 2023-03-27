@@ -5,7 +5,7 @@
 [GitHub Action](https://github.com/features/actions) for sending a Telegram notification message.
 
 ## Update to used with GO & Chainguard Image
-Image Size: 11.8MB
+- Image Size: 11.8MB
 ![image](https://user-images.githubusercontent.com/26101787/227793440-d02a0d9e-e623-497e-8d64-c6a7862c8a25.png)
 
 ## Usage

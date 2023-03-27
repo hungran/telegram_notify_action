@@ -18,5 +18,5 @@ inputs:
     default: MarkdownV2
     required: true
 runs:
-  using: 'node16'
-  main: 'dist/index.js'
+  using: 'docker'
+  image: 'chainguard.Dockerfile'
