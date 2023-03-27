@@ -1,4 +1,4 @@
-FROM cgr.dev/chainguard/node:16 as appbuild
+FROM cgr.dev/chainguard/node:19 as appbuild
 
 # Create app directory
 WORKDIR /usr/src/app
@@ -12,7 +12,7 @@ RUN npm install
 RUN npm run pack
 
 #Final
-FROM cgr.dev/chainguard/node:16 as final
+FROM cgr.dev/chainguard/node:19 as final
 WORKDIR /usr/src/app
 COPY --from=appbuild /usr/src/app/dist ./dist
 COPY --chown=node:node package*.json ./
